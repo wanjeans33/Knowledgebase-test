@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ragbench"
+version = "0.1.0"
+description = "A test bench for comparing RAG systems, RAG variants, and (axiomatic) LLM knowledge bases."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "jingwang" }]
+dependencies = [
+    "pydantic>=2",
+    "pyyaml",
+    "typer>=0.12",
+    "openai>=1.40",          # also used as the OpenAI-compatible client for DeepSeek
+    "datasets>=2.19",
+    "pandas>=2.2",
+    "pyarrow>=15",
+    "numpy",
+    "tenacity>=8.3",
+    "python-dotenv",
+    "rich",
+    "diskcache",
+]
+
+[project.optional-dependencies]
+# Embedding + rerank run locally by default via sentence-transformers / torch.
+# Kept as an extra so Phase-0 offline tests install fast without torch.
+local = ["sentence-transformers>=3.0", "torch"]
+vanilla = ["langchain>=0.2", "langchain-community>=0.2", "faiss-cpu", "chromadb"]
+graph = ["lightrag-hku", "networkx"]
+memory = ["mem0ai"]
+ragas = ["ragas>=0.2"]
+eval = ["deepeval"]
+llamaindex = ["llama-index-core"]
+openai_embed = ["openai"]       # optional cloud embedding backend
+local_llm = ["ollama"]          # optional local generation backend
+dev = ["pytest>=8", "ruff", "mypy", "pytest-cov"]
+
+[project.scripts]
+ragbench = "ragbench.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

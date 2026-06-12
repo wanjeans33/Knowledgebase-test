@@ -1,0 +1,39 @@
+# Goal (b): stability / consistency of an LLM wiki (memory-backed knowledge base).
+# Start with a tiny slice; raise once the harness output looks right.
+name: exp_b_stability
+seed: 7
+provider:
+  llm:
+    backend: deepseek
+    model: deepseek-chat
+    temperature: 0.0
+    seed: 7
+  embeddings:
+    backend: local
+    model: BAAI/bge-m3
+    device: auto
+  cache: false          # stability needs real (un-deduped) repeated calls
+systems:
+  - name: memory_wiki
+    backend: mem0
+    top_k: 5
+datasets:
+  - name: popqa
+    split: test
+    slice: 25           # raise to ~500 for the real run
+metrics: [em, f1]
+run:
+  repeats: 1
+  output_dir: runs/
+  concurrency: 4
+stability:
+  repeats: 5
+  paraphrases_per_query: 3
+  contradiction_check: true
+  knowledge_edit:
+    enabled: true
+    edits_per_query: 1
+  thresholds:
+    determinism_min: 0.9
+    paraphrase_invariance_min: 0.8
+    contradiction_rate_max: 0.05

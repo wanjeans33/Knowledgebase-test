@@ -1,0 +1,29 @@
+# Tiny end-to-end check: 1 system, 20 HotpotQA questions, deepseek-chat + local bge-small.
+# Runnable in a few minutes once DEEPSEEK_API_KEY is set.
+name: smoke
+seed: 0
+provider:
+  llm:
+    backend: deepseek
+    model: deepseek-chat
+    seed: 0
+  embeddings:
+    backend: local
+    model: BAAI/bge-small-en-v1.5   # smaller/faster for smoke runs
+    device: auto
+  cache: true
+systems:
+  - name: vanilla
+    top_k: 3
+    chunk_size: 256
+    chunk_overlap: 32
+    vector_store: numpy
+datasets:
+  - name: hotpotqa
+    split: validation
+    slice: 20
+metrics: [em, f1, recall@5]
+run:
+  repeats: 1
+  output_dir: runs/
+  concurrency: 4

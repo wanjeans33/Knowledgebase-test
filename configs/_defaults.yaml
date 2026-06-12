@@ -1,0 +1,18 @@
+# Shared defaults deep-merged under every experiment config in this folder.
+seed: 0
+provider:
+  llm:
+    backend: deepseek
+    model: deepseek-chat
+    base_url: ${ENV:DEEPSEEK_BASE_URL:https://api.deepseek.com}
+    temperature: 0.0
+    max_tokens: 1024
+  embeddings:
+    backend: local
+    model: BAAI/bge-m3
+    device: auto
+  cache: true
+run:
+  repeats: 1
+  output_dir: runs/
+  concurrency: 4
