@@ -33,6 +33,7 @@ graph = ["lightrag-hku", "networkx"]
 memory = ["mem0ai"]
 ragas = ["ragas>=0.2"]
 eval = ["deepeval"]
+docs = ["markitdown[pdf]>=0.1.6"]
 llamaindex = ["llama-index-core"]
 openai_embed = ["openai"]       # optional cloud embedding backend
 local_llm = ["ollama"]          # optional local generation backend
