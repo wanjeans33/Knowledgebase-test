@@ -4,6 +4,9 @@ This directory stores the RAG evaluation literature used by this repository.
 
 - `papers/pdf/`: downloaded PDFs.
 - `papers/markdown/`: Markdown converted from the PDFs with `markitdown`.
+- `papers/notes_zh/`: Chinese structured reading notes. These are not full
+  translations; they summarize evaluation methods and extract design ideas for
+  this repository.
 
 The Markdown files are useful for search, note taking, and LLM-assisted reading.
 They are not publication-quality transcriptions; PDF layout, tables, math, and
